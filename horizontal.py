@@ -35,11 +35,13 @@ def skew_correction(image, delta=1, maxlimit=90):
 # read from path -- edit
 image = cv2.imread('/home/sylwiabadur/Desktop/OBRAZKI/hm.jpg')
 angle, rotated = skew_correction(image)
+dst = cv2.fastNlMeansDenoisingColored(
+    rotated, None, 10, 10, 7, 21)  # image denoising
 print("Skew angle: " + str(angle))
-plt.subplot(121), plt.imshow(image), plt.title('Original')
-plt.xticks([]), plt.yticks([])
-plt.subplot(122), plt.imshow(rotated), plt.title('Skew correction')
-plt.xticks([]), plt.yticks([])
-plt.show()
+#plt.subplot(121), plt.imshow(image), plt.title('Original')
+#plt.xticks([]), plt.yticks([])
+#plt.subplot(122), plt.imshow(rotated), plt.title('Skew correction')
+#plt.xticks([]), plt.yticks([])
+# plt.show()
 cv2.imwrite('/home/sylwiabadur/Desktop/OBRAZKI/new.jpg',
-            rotated)  # write to path -- edit
+            dst)  # write to path -- edit
