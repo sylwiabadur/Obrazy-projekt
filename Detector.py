@@ -40,8 +40,10 @@ def skew_correction(image, delta=1, maxlimit=90):
     M = cv2.getRotationMatrix2D(center, best_angle, 1.0)
     rotated = cv2.warpAffine(image, M, (w, h), flags=cv2.INTER_CUBIC,
                              borderMode=cv2.BORDER_REPLICATE)
+    dst = cv2.fastNlMeansDenoisingColored(
+        rotated, None, 10, 10, 7, 21)  # image denoising
 
-    return best_angle, rotated
+    return best_angle, dst
 
 def get_parent_dir(n=1):
     """ returns the n-th parent dicrectory of the current
